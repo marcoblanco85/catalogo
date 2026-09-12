@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Catalogo</title>
+<style>
+:root{--pr:#1f6aa5;--bg:#0f172a;--sf:#1e293b;--bd:#334155;--tx:#f8fafc;--mu:#94a3b8;--gn:#10b981;--am:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+header{background:linear-gradient(135deg,var(--pr),#2980b9);padding:16px 28px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.5)}
+#logo{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4)}
+header h1{font-size:1.45rem;font-weight:700;flex:1}
+#rb{background:rgba(255,255,255,.15);padding:6px 13px;border-radius:18px;font-size:.82rem;white-space:nowrap}
+.ctrl{padding:20px 28px 10px;max-width:1400px;margin:0 auto}
+.sw{position:relative;margin-bottom:12px}
+.sw::before{content:"\1F50D";position:absolute;left:13px;top:50%;transform:translateY(-50%)}
+#srch{width:100%;padding:11px 14px 11px 42px;background:var(--sf);border:1.5px solid var(--bd);border-radius:10px;color:var(--tx);font-size:.95rem;outline:none}
+#srch:focus{border-color:var(--pr)}
+.cats{display:flex;gap:7px;flex-wrap:wrap}
+.cb{padding:6px 14px;border-radius:18px;border:1.5px solid var(--bd);background:transparent;color:var(--mu);cursor:pointer;font-size:.82rem;transition:all .2s}
+.cb:hover,.cb.on{background:var(--pr);border-color:var(--pr);color:#fff}
+.gs{padding:10px 28px 48px;max-width:1400px;margin:0 auto}
+.cnt{color:var(--mu);font-size:.82rem;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:16px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,0,0,.4)}
+.ci{width:100%;height:180px;object-fit:cover}
+.cn{width:100%;height:180px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e293b,#0f2540);font-size:3rem}
+.cb2{padding:12px}
+.bdg{display:inline-block;padding:2px 9px;border-radius:9px;font-size:.7rem;background:rgba(31,106,165,.15);color:#60a5fa;border:1px solid rgba(31,106,165,.25);margin-bottom:7px}
+.cn2{font-size:.96rem;font-weight:600;margin-bottom:5px}
+.cd{font-size:.79rem;color:var(--mu);line-height:1.5;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pr2{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--bd)}
+.pu{font-size:1.12rem;font-weight:700;color:var(--gn)}
+.pb{font-size:.84rem;color:var(--mu)}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:999;align-items:center;justify-content:center;padding:16px}
+.ov.open{display:flex}
+.mod{background:var(--sf);border:1px solid var(--bd);border-radius:18px;max-width:450px;width:100%;max-height:90vh;overflow-y:auto;animation:up .25s ease;position:relative}
+@keyframes up{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.mi{width:100%;height:225px;object-fit:cover;border-radius:18px 18px 0 0}
+.mb{padding:20px}
+.mn{font-size:1.35rem;font-weight:700;margin:8px 0 10px}
+.md{color:var(--mu);line-height:1.65;margin-bottom:15px}
+.mpr{display:flex;gap:16px;padding:13px;background:rgba(16,185,129,.07);border-radius:10px;border:1px solid rgba(16,185,129,.2)}
+.mpi{display:flex;flex-direction:column;gap:3px}
+.mpl{font-size:.75rem;color:var(--mu)}
+.mpvu{font-size:1.35rem;font-weight:700;color:var(--gn)}
+.mpvb{font-size:1.25rem;font-weight:700;color:var(--am)}
+.xb{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.55);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;z-index:10}
+.emp{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--mu)}
+.emp-ic{font-size:3rem;margin-bottom:12px}
+footer{text-align:center;padding:22px;color:var(--mu);font-size:.78rem;border-top:1px solid var(--bd)}
+@media(max-width:600px){header{padding:12px 14px}header h1{font-size:1.15rem}.ctrl,.gs{padding-left:14px;padding-right:14px}.grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}.ci,.cn{height:145px}}
+</style></head>
+<body>
+<header>
+<img id="logo" src="images/logo.png?t=0" alt="" onerror="this.style.display='none'">
+<h1 id="bn">Catalogo</h1><div id="rb">... cargando</div>
+</header>
+<div class="ctrl">
+<div class="sw"><input id="srch" type="text" placeholder="Buscar productos..." oninput="fil()"></div>
+<div class="cats" id="cats"><button class="cb on" data-id="all" onclick="sc(this,'all')">Todos</button></div>
+</div>
+<div class="gs">
+<div class="cnt" id="cnt"></div>
+<div class="grid" id="grid"><div class="emp"><div class="emp-ic">&#9203;</div><p>Cargando...</p></div></div>
+</div>
+<div class="ov" id="ov" onclick="cm(event)">
+<div class="mod" id="mod"><button class="xb" onclick="cx()">&#x2715;</button></div>
+</div>
+<footer>Catalogo Digital v1.0</footer>
+<script>
+var P=[],C=[],cfg={},cat='all',q='';
+async function load(){
+try{
+var r=await fetch('data.json?t='+Date.now());
+var d=await r.json();
+P=d.products;C=d.categories;cfg=d.config;
+document.title=(cfg.nombre_negocio||'Catalogo')+' - Catalogo';
+document.getElementById('bn').textContent=cfg.nombre_negocio||'Catalogo';
+document.getElementById('rb').textContent=cfg.tasa_dolar&&cfg.tasa_dolar!='0'?
+'Bs '+parseFloat(cfg.tasa_dolar).toFixed(2)+' / $':'Sin tasa BCV';
+if(cfg.tiene_logo){var l=document.getElementById('logo');l.src='images/logo.png?t='+Date.now();l.style.display='';}
+if(cfg.color_principal)document.documentElement.style.setProperty('--pr',cfg.color_principal);
+rC();ren();
+}catch(e){console.error(e);}
+}
+function bs(u){if(!cfg.tasa_dolar||cfg.tasa_dolar=='0')return 'N/A';return 'Bs '+(parseFloat(u)*parseFloat(cfg.tasa_dolar)).toFixed(2);}
+function rC(){
+var c=document.getElementById('cats');
+c.innerHTML='<button class="cb on" data-id="all" onclick="sc(this,\'all\')">&#127991; Todos</button>';
+C.forEach(function(x){var b=document.createElement('button');b.className='cb';b.setAttribute('data-id',x.id);
+b.textContent=(x.icono||'')+' '+x.nombre;b.onclick=function(){sc(this,x.id);};c.appendChild(b);});
+}
+function sc(btn,id){document.querySelectorAll('.cb').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');cat=id;ren();}
+function fil(){q=document.getElementById('srch').value.toLowerCase();ren();}
+function vis(){return P.filter(function(p){var mc=cat==='all'||p.categoria_id===cat;var ms=!q||p.nombre.toLowerCase().includes(q)||(p.descripcion&&p.descripcion.toLowerCase().includes(q));return mc&&ms;});}
+function ren(){
+var vp=vis();
+document.getElementById('cnt').textContent=vp.length+' producto'+(vp.length!==1?'s':'');
+if(!vp.length){document.getElementById('grid').innerHTML='<div class="emp"><div class="emp-ic">&#128269;</div><p>Sin resultados</p></div>';return;}
+document.getElementById('grid').innerHTML=vp.map(function(p){
+return '<div class="card" onclick="om('+p.id+')">'+(p.imagen_path?'<img class="ci" src="images/'+p.imagen_path+'" loading="lazy" onerror="this.outerHTML=\'<div class=cn>\&#128230;</div>\'">':
+'<div class="cn">&#128230;</div>')+'<div class="cb2">'+
+(p.categoria_nombre?'<span class="bdg">'+(p.categoria_icono||'')+' '+p.categoria_nombre+'</span>':'')+
+'<div class="cn2">'+p.nombre+'</div><div class="cd">'+(p.descripcion||'Sin descripcion')+
+'</div><div class="pr2"><span class="pu">$'+parseFloat(p.precio_usd).toFixed(2)+'</span><span class="pb">'+bs(p.precio_usd)+'</span></div></div></div>';
+}).join('');
+}
+function om(id){
+var p=P.find(function(x){return x.id===id;});if(!p)return;
+var mc=document.getElementById('mod');
+mc.innerHTML='<button class="xb" onclick="cx()">&#x2715;</button>'+(p.imagen_path?'<img class="mi" src="images/'+p.imagen_path+'" onerror="this.style.display=\'none\'">':'')+
+'<div class="mb">'+(p.categoria_nombre?'<span class="bdg">'+(p.categoria_icono||'')+' '+p.categoria_nombre+'</span>':'')+
+'<div class="mn">'+p.nombre+'</div><div class="md">'+(p.descripcion||'Sin descripcion')+
+'</div><div class="mpr"><div class="mpi"><span class="mpl">Precio USD</span><span class="mpvu">$'+parseFloat(p.precio_usd).toFixed(2)+'</span></div>'+
+'<div class="mpi"><span class="mpl">Precio Bs (BCV)</span><span class="mpvb">'+bs(p.precio_usd)+'</span></div></div></div>';
+document.getElementById('ov').classList.add('open');
+}
+function cm(e){if(e.target===document.getElementById('ov'))cx();}
+function cx(){document.getElementById('ov').classList.remove('open');}
+load();setInterval(load,300000);
+</script></body></html>
