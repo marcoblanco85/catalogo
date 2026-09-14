@@ -1,1 +1,1 @@
-{"config": {"nombre_negocio": "Mi Negocio", "color_principal": "#1f6aa5", "tasa_dolar": "832.4883", "tiene_logo": false}, "categories": [], "products": []}
+{"config": {"nombre_negocio": "Mi Negocio", "color_principal": "#1f6aa5", "tasa_dolar": "832.4883", "tiene_logo": false}, "categories": [], "products": [{"id": 1, "nombre": "prueba", "descripcion": "producto", "precio_usd": 3.27, "categoria_id": null, "imagen_path": "5c62ec30afb24d4bb6f406a80b99cb02.png", "activo": 1, "created_at": "2026-09-14 16:01:14", "categoria_nombre": null, "categoria_icono": null}]}
